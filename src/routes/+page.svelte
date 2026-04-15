@@ -138,10 +138,22 @@
 			}).addTo(map);
 
 			L.polyline(routeWaypoints, {
-				color: '#b8c9f7',
-				weight: 4,
-				opacity: 0.85,
-				dashArray: '8 8'
+				color: '#071126',
+				weight: 12,
+				opacity: 0.88,
+				lineCap: 'round',
+				lineJoin: 'round',
+				interactive: false
+			}).addTo(map);
+
+			L.polyline(routeWaypoints, {
+				color: '#eef5ff',
+				weight: 6,
+				opacity: 0.96,
+				lineCap: 'round',
+				lineJoin: 'round',
+				dashArray: '12 8',
+				interactive: false
 			}).addTo(map);
 
 			L.circleMarker(routeWaypoints[0], {
@@ -167,17 +179,20 @@
 			const initialProgress = getRouteProgress(routeT);
 
 			progressLine = L.polyline(initialProgress.pathUntil, {
-				color: '#74ffd8',
-				weight: 5,
-				opacity: 0.95
+				color: '#00ffd5',
+				weight: 8,
+				opacity: 1,
+				lineCap: 'round',
+				lineJoin: 'round',
+				className: 'route-progress-line'
 			}).addTo(map);
 
 			bikeMarker = L.marker(initialProgress.point, {
 				icon: L.divIcon({
 					className: 'bike-div-icon',
-					html: '<span class="bike-marker">🚲</span>',
-					iconSize: [26, 26],
-					iconAnchor: [13, 13]
+					html: '<span class="bike-marker" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="16" cy="46" r="11"></circle><circle cx="48" cy="46" r="11"></circle><path d="M16 46 L27 27 L35 46 L48 46 M27 27 H39 L44 35 M27 27 L20 20 M35 46 L41 34"></path></svg></span>',
+					iconSize: [48, 48],
+					iconAnchor: [24, 24]
 				}),
 				keyboard: false
 			}).addTo(map);
@@ -244,46 +259,48 @@
 		</div>
 	</section>
 
-	<section class="route-panel" aria-label="Route progress from Dublin to Addis Ababa">
-		<div class="route-head">
-			<h2>Route Progress</h2>
-			<p>{routeStart} → {routeEnd} · {routeDistanceKm.toLocaleString()} km</p>
-		</div>
-		<div
-			class="route-map"
-			bind:this={mapContainer}
-			role="img"
-			aria-label={`OpenStreetMap route from ${routeStart} to ${routeEnd}`}
-		></div>
-		<p class="route-caption">
-			{routeProgressKm.toFixed(1)} km of {routeDistanceKm.toLocaleString()} km completed by all riders
-			combined ({routeProgressPercent.toFixed(1)}%)
-		</p>
-	</section>
-
-	<section class="table-wrap" aria-label="Orbis cycling leaderboard">
-		<table>
-			<thead>
-				<tr>
-					<th>Rank</th>
-					<th>Driver</th>
-					<th>Team</th>
-					<th class="km">KM</th>
-					<th>Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each leaderboard as rider, index (rider.name)}
-					<tr class:winner={index === 0}>
-						<td>{index + 1}</td>
-						<td>{rider.name}</td>
-						<td>{rider.team}</td>
-						<td class="km">{rider.kmCycled.toFixed(1)}</td>
-						<td>{rider.totalTime}</td>
+	<section class="content-grid">
+		<section class="table-wrap" aria-label="Orbis cycling leaderboard">
+			<table>
+				<thead>
+					<tr>
+						<th>Rank</th>
+						<th>Driver</th>
+						<th>Team</th>
+						<th class="km">KM</th>
+						<th>Time</th>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{#each leaderboard as rider, index (rider.name)}
+						<tr class:winner={index === 0}>
+							<td>{index + 1}</td>
+							<td>{rider.name}</td>
+							<td>{rider.team}</td>
+							<td class="km">{rider.kmCycled.toFixed(1)}</td>
+							<td>{rider.totalTime}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</section>
+
+		<section class="route-panel" aria-label="Route progress from Dublin to Addis Ababa">
+			<div class="route-head">
+				<h2>Route Progress</h2>
+				<p>{routeStart} → {routeEnd} · {routeDistanceKm.toLocaleString()} km</p>
+			</div>
+			<div
+				class="route-map"
+				bind:this={mapContainer}
+				role="img"
+				aria-label={`OpenStreetMap route from ${routeStart} to ${routeEnd}`}
+			></div>
+			<p class="route-caption">
+				{routeProgressKm.toFixed(1)} km of {routeDistanceKm.toLocaleString()} km completed by all riders
+				combined ({routeProgressPercent.toFixed(1)}%)
+			</p>
+		</section>
 	</section>
 </main>
 
@@ -331,6 +348,14 @@
 		gap: 1rem;
 	}
 
+	.content-grid {
+		flex: 1;
+		display: grid;
+		grid-template-columns: minmax(0, 1.55fr) minmax(360px, 1fr);
+		gap: 1rem;
+		align-items: stretch;
+	}
+
 	.stat {
 		background: rgba(255, 255, 255, 0.09);
 		border: 1px solid rgba(255, 255, 255, 0.18);
@@ -361,6 +386,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.7rem;
+		height: 100%;
 	}
 
 	.route-head h2 {
@@ -376,7 +402,8 @@
 
 	.route-map {
 		position: relative;
-		height: clamp(220px, 38vh, 360px);
+		flex: 1;
+		min-height: clamp(220px, 38vh, 360px);
 		border-radius: 0.8rem;
 		overflow: hidden;
 		border: 1px solid rgba(255, 255, 255, 0.14);
@@ -405,11 +432,32 @@
 		border: none;
 	}
 
+	:global(.route-progress-line) {
+		filter: drop-shadow(0 0 5px rgba(0, 255, 213, 0.95))
+			drop-shadow(0 0 11px rgba(0, 255, 213, 0.7));
+	}
+
 	:global(.bike-marker) {
 		display: block;
-		font-size: 1.3rem;
-		line-height: 1;
+		width: 100%;
+		height: 100%;
 		filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
+	}
+
+	:global(.bike-marker svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	:global(.bike-marker svg circle),
+	:global(.bike-marker svg path) {
+		fill: none;
+		stroke: #ffd34d;
+		stroke-width: 4.6;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		filter: drop-shadow(0 0 3px rgba(255, 211, 77, 0.85));
 	}
 
 	:global(.route-tooltip) {
@@ -472,6 +520,10 @@
 		}
 
 		.cards {
+			grid-template-columns: 1fr;
+		}
+
+		.content-grid {
 			grid-template-columns: 1fr;
 		}
 
