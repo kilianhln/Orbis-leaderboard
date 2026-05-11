@@ -52,8 +52,7 @@
 		].sort((a, b) => b.averageKm - a.averageKm || a.name.localeCompare(b.name))
 	);
 
-	let leaderKm = $derived(individualLeaderboard[0]?.kmCycled ?? 0);
-	let totalKm = $derived(riders.reduce((sum, rider) => sum + rider.kmCycled, 0));
+	let bestCompanyAverageKm = $derived(companyLeaderboard[0]?.averageKm ?? 0);
 </script>
 
 <main class="screen">
@@ -64,27 +63,23 @@
 			alt="Orbis logo"
 		/>
 		<div class="header-text">
-			<p class="subtitle">Live Beamer View</p>
+			<p class="subtitle">Live Leaderboard</p>
 			<h1>{eventName}</h1>
 		</div>
 	</header>
 
 	<section class="cards">
 		<div class="stat">
-			<span>Current Leader</span>
+			<span>Current Company Leader</span>
 			<strong>{companyLeaderboard[0]?.name ?? '—'}</strong>
 		</div>
 		<div class="stat">
-			<span>Best Distance</span>
-			<strong>{leaderKm.toFixed(1)} km</strong>
+			<span>Best Company Average</span>
+			<strong>{Math.round(bestCompanyAverageKm * 1000).toLocaleString()} m</strong>
 		</div>
 		<div class="stat">
 			<span>Total Riders</span>
 			<strong>{individualLeaderboard.length}</strong>
-		</div>
-		<div class="stat">
-			<span>Accumulated KM</span>
-			<strong>{totalKm.toFixed(1)} km</strong>
 		</div>
 	</section>
 
@@ -196,7 +191,7 @@
 
 	.cards {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
 	}
 
