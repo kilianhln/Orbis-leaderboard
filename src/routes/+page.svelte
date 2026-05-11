@@ -57,15 +57,15 @@
 
 <main class="screen">
 	<header class="header">
+		<div class="header-text">
+			<p class="subtitle">Live Leaderboard</p>
+			<h1>{eventName}</h1>
+		</div>
 		<img
 			class="logo"
 			src="/Orbis_Plane_Logo_Reversed_RGB.png"
 			alt="Orbis logo"
 		/>
-		<div class="header-text">
-			<p class="subtitle">Live Leaderboard</p>
-			<h1>{eventName}</h1>
-		</div>
 	</header>
 
 	<section class="cards">
@@ -131,6 +131,14 @@
 			</table>
 		</section>
 	</section>
+
+	<footer class="footer">
+		<img
+			class="logo logo-ishka"
+			src="/Ishka-AirfinanceGlobal-logolockup-white.png"
+			alt="Ishka Airfinance Global logo"
+		/>
+	</footer>
 </main>
 
 <style>
@@ -154,11 +162,26 @@
 		display: flex;
 		align-items: center;
 		gap: 1.5rem;
+		justify-content: space-between;
 	}
 
 	.header-text {
 		display: flex;
 		flex-direction: column;
+		flex: 1;
+		text-align: left;
+		align-items: flex-start;
+	}
+
+	.footer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 1rem;
+	}
+
+	.logo-ishka {
+		height: clamp(2.5rem, 5vw, 4.5rem);
 	}
 
 	.logo {
