@@ -215,7 +215,7 @@
 	.subtitle {
 		margin: 0;
 		font-size: clamp(1rem, 1.8vw, 1.35rem);
-		color: #EADA24;
+		color: #95a4b1;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
@@ -252,7 +252,7 @@
 
 	.stat span {
 		font-size: clamp(0.8rem, 1.2vw, 1rem);
-		color: #EADA24;
+		color: #95a4b1;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 	}
@@ -265,7 +265,7 @@
 	.table-panel {
 		flex: 1;
 		background: rgba(37, 55, 70, 0.7);
-		border: 1px solid rgba(234, 218, 36, 0.25);
+		border: 1px solid rgba(255, 255, 255, 0.25);
 		border-radius: 1rem;
 		overflow: hidden;
 	}
@@ -287,8 +287,8 @@
 	}
 
 	thead {
-		background: rgba(255, 255, 255, 0.08);
-		color: #EADA24;
+		background: #EADA24;
+		color: #253746;
 	}
 
 	th,
@@ -303,12 +303,6 @@
 
 	tbody tr:nth-child(even) {
 		background: #ffffff17;
-	}
-
-	tbody tr.winner {
-		background: linear-gradient(90deg, rgba(234, 218, 36, 0.35), rgba(234, 218, 36, 0.05));
-		color: #f6f7fb;
-		font-weight: 600;
 	}
 
 	.km {
