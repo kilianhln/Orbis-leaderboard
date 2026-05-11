@@ -1,5 +1,11 @@
 <svelte:head>
 	<title>Cycle for Sight Challenge Leaderboard</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
 
 <script lang="ts">
@@ -85,7 +91,7 @@
 
 	<section class="content-grid">
 		<section class="table-panel" aria-labelledby="company-leaderboard-title">
-			<h2 id="company-leaderboard-title">Company Leaderboard</h2>
+			<h2 id="company-leaderboard-title">Company</h2>
 			<table>
 				<thead>
 					<tr>
@@ -108,7 +114,7 @@
 			</table>
 		</section>
 		<section class="table-panel" aria-labelledby="individual-leaderboard-title">
-			<h2 id="individual-leaderboard-title">Individual Leaderboard</h2>
+			<h2 id="individual-leaderboard-title">Individual</h2>
 			<table>
 				<thead>
 					<tr>
@@ -200,8 +206,9 @@
 
 	.header h1 {
 		margin: 0.25rem 0;
+		font-family: 'Libre Baskerville', 'Georgia', serif;
 		font-size: clamp(2.2rem, 4.8vw, 4.5rem);
-		font-weight: 800;
+		font-weight: 700;
 		letter-spacing: 0.02em;
 	}
 
@@ -265,7 +272,9 @@
 	.table-panel h2 {
 		margin: 0;
 		padding: 1.5rem 1.25rem 1.25rem;
+		font-family: 'Libre Baskerville', 'Georgia', serif;
 		font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+		font-weight: 700;
 		color: #EADA24;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
