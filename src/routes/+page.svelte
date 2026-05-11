@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Orbis Cycling Event Leaderboard</title>
+	<title>Cycle for Sight Challenge Leaderboard</title>
 </svelte:head>
 
 <script lang="ts">
@@ -14,9 +14,10 @@
 		name: string;
 		totalKm: number;
 		riders: number;
+		averageKm: number;
 	};
 
-	const eventName = 'Orbis Cycling Event';
+	const eventName = 'Cycle for Sight Challenge';
 
 	let riders = $state<Rider[]>([
 		{ name: 'Lena Hoffmann', team: 'Summit Wheels', kmCycled: 82.4, totalTime: '02:31:42' },
@@ -36,17 +37,19 @@
 					const current = companies.get(rider.team) ?? {
 						name: rider.team,
 						totalKm: 0,
-						riders: 0
+						riders: 0,
+						averageKm: 0
 					};
 
 					current.totalKm += rider.kmCycled;
 					current.riders += 1;
+					current.averageKm = current.totalKm / current.riders;
 					companies.set(rider.team, current);
 
 					return companies;
 				}, new Map<string, Company>())
 				.values()
-		].sort((a, b) => b.totalKm - a.totalKm || a.name.localeCompare(b.name))
+		].sort((a, b) => b.averageKm - a.averageKm || a.name.localeCompare(b.name))
 	);
 
 	let leaderKm = $derived(individualLeaderboard[0]?.kmCycled ?? 0);
@@ -55,15 +58,21 @@
 
 <main class="screen">
 	<header class="header">
-		<p class="subtitle">Live Beamer View</p>
-		<h1>{eventName}</h1>
-		<p class="summary">Sorted by cycled kilometers (KM)</p>
+		<img
+			class="logo"
+			src="/Orbis_Plane_Logo_Reversed_RGB.png"
+			alt="Orbis logo"
+		/>
+		<div class="header-text">
+			<p class="subtitle">Live Beamer View</p>
+			<h1>{eventName}</h1>
+		</div>
 	</header>
 
 	<section class="cards">
 		<div class="stat">
 			<span>Current Leader</span>
-			<strong>{individualLeaderboard[0]?.name ?? '—'}</strong>
+			<strong>{companyLeaderboard[0]?.name ?? '—'}</strong>
 		</div>
 		<div class="stat">
 			<span>Best Distance</span>
@@ -87,7 +96,7 @@
 					<tr>
 						<th>Rank</th>
 						<th>Company</th>
-						<th class="km">Total KM</th>
+						<th class="km">Average Meter</th>
 						<th class="riders">Riders</th>
 					</tr>
 				</thead>
@@ -96,7 +105,7 @@
 						<tr class:winner={index === 0}>
 							<td>{index + 1}</td>
 							<td>{company.name}</td>
-							<td class="km">{company.totalKm.toFixed(1)}</td>
+							<td class="km">{Math.round(company.averageKm * 1000).toLocaleString()}</td>
 							<td class="riders">{company.riders}</td>
 						</tr>
 					{/each}
@@ -111,8 +120,7 @@
 						<th>Rank</th>
 						<th>Driver</th>
 						<th>Company</th>
-						<th class="km">KM</th>
-						<th>Time</th>
+						<th class="km">Meter</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -121,8 +129,7 @@
 							<td>{index + 1}</td>
 							<td>{rider.name}</td>
 							<td>{rider.team}</td>
-							<td class="km">{rider.kmCycled.toFixed(1)}</td>
-							<td>{rider.totalTime}</td>
+							<td class="km">{Math.round(rider.kmCycled * 1000).toLocaleString()}</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -146,6 +153,24 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.8rem;
+	}
+
+	.header {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.header-text {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.logo {
+		height: clamp(3.5rem, 7vw, 6rem);
+		width: auto;
+		object-fit: contain;
+		flex-shrink: 0;
 	}
 
 	.header h1 {
