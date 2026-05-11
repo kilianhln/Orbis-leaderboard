@@ -275,7 +275,7 @@
 		font-family: 'Libre Baskerville', 'Georgia', serif;
 		font-size: clamp(1.6rem, 2.8vw, 2.4rem);
 		font-weight: 700;
-		color: #EADA24;
+		color: #f6f7fb;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 	}
@@ -288,7 +288,7 @@
 
 	thead {
 		background: rgba(255, 255, 255, 0.08);
-		color: #f6f7fb;
+		color: #EADA24;
 	}
 
 	th,
@@ -297,8 +297,12 @@
 		text-align: left;
 	}
 
+	tbody tr:nth-child(odd) {
+		background: #213340;
+	}
+
 	tbody tr:nth-child(even) {
-		background: rgba(234, 218, 36, 0.05);
+		background: #ffffff17;
 	}
 
 	tbody tr.winner {
