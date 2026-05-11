@@ -97,8 +97,8 @@
 					<tr>
 						<th>Rank</th>
 						<th>Company</th>
-						<th class="km">Average Meter</th>
 						<th class="riders">Riders</th>
+						<th class="km">Average Meter</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -106,8 +106,8 @@
 						<tr class:winner={index === 0}>
 							<td>{index + 1}</td>
 							<td>{company.name}</td>
-							<td class="km">{Math.round(company.averageKm * 1000).toLocaleString()}</td>
 							<td class="riders">{company.riders}</td>
+							<td class="km">{Math.round(company.averageKm * 1000).toLocaleString()}</td>
 						</tr>
 					{/each}
 				</tbody>
