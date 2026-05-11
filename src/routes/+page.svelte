@@ -26,15 +26,38 @@
 	const eventName = 'Cycle for Sight Challenge';
 
 	let riders = $state<Rider[]>([
-		{ name: 'Lena Hoffmann', team: 'Summit Wheels', kmCycled: 82.4, totalTime: '02:31:42' },
-		{ name: 'Tom Richter', team: 'Velocity Core', kmCycled: 94.2, totalTime: '02:54:06' },
-		{ name: 'Mina Aydin', team: 'Road Falcons', kmCycled: 88.7, totalTime: '02:43:18' },
-		{ name: 'Noah Weiss', team: 'Urban Sprint', kmCycled: 76.5, totalTime: '02:20:54' },
-		{ name: 'Sara Klein', team: 'Alpine Cadence', kmCycled: 97.1, totalTime: '03:01:11' },
-		{ name: 'Jonas Bauer', team: 'Night Riders', kmCycled: 90.3, totalTime: '02:48:29' }
+		{ name: 'Lena Hoffmann', team: 'Summit Wheels', kmCycled: 0.524, totalTime: '02:31:42' },
+		{ name: 'Tom Richter', team: 'Velocity Core', kmCycled: 0.812, totalTime: '02:54:06' },
+		{ name: 'Mina Aydin', team: 'Road Falcons', kmCycled: 0.689, totalTime: '02:43:18' },
+		{ name: 'Noah Weiss', team: 'Urban Sprint', kmCycled: 0.145, totalTime: '02:20:54' },
+		{ name: 'Sara Klein', team: 'Alpine Cadence', kmCycled: 0.933, totalTime: '03:01:11' },
+		{ name: 'Jonas Bauer', team: 'Night Riders', kmCycled: 0.078, totalTime: '02:48:29' },
+		{ name: 'Hannah Brandt', team: 'Summit Wheels', kmCycled: 0.376, totalTime: '02:18:55' },
+		{ name: 'David Eberhard', team: 'Velocity Core', kmCycled: 0.712, totalTime: '02:39:12' },
+		{ name: 'Lukas Berger', team: 'Road Falcons', kmCycled: 0.458, totalTime: '02:26:48' },
+		{ name: 'Marie Schulz', team: 'Night Riders', kmCycled: 0.591, totalTime: '02:35:03' },
+		{ name: 'Elias Vogel', team: 'Aero Pulse', kmCycled: 0.844, totalTime: '02:52:11' },
+		{ name: 'Lara Krüger', team: 'Aero Pulse', kmCycled: 0.612, totalTime: '02:30:27' },
+		{ name: 'Felix Maier', team: 'Carbon Cranks', kmCycled: 0.273, totalTime: '02:09:33' },
+		{ name: 'Sophie Lang', team: 'Carbon Cranks', kmCycled: 0.498, totalTime: '02:24:17' },
+		{ name: 'Matti Werner', team: 'Storm Chasers', kmCycled: 0.967, totalTime: '03:05:48' },
+		{ name: 'Anna Becker', team: 'Ridge Runners', kmCycled: 0.205, totalTime: '02:14:52' },
+		{ name: 'Paul Neumann', team: 'Ridge Runners', kmCycled: 0.738, totalTime: '02:41:09' },
+		{ name: 'Clara Roth', team: 'Dawn Patrol', kmCycled: 0.351, totalTime: '02:17:44' },
+		{ name: 'Henry Fischer', team: 'Dawn Patrol', kmCycled: 0.624, totalTime: '02:33:55' },
+		{ name: 'Mila Wagner', team: 'Sunset Cyclers', kmCycled: 0.118, totalTime: '02:11:30' },
+		{ name: 'Leo Schwarz', team: 'Sunset Cyclers', kmCycled: 0.482, totalTime: '02:23:08' },
+		{ name: 'Ida Sommer', team: 'City Sparks', kmCycled: 0.789, totalTime: '02:47:36' },
+		{ name: 'Ben Köhler', team: 'Iron Pedalers', kmCycled: 0.566, totalTime: '02:29:14' },
+		{ name: 'Nora Engel', team: 'Iron Pedalers', kmCycled: 0.402, totalTime: '02:21:46' },
+		{ name: 'Theo Albers', team: 'Polar Spokes', kmCycled: 0.658, totalTime: '02:36:51' },
+		{ name: 'Pia Hartmann', team: 'Echo Trail', kmCycled: 0.314, totalTime: '02:15:22' },
+		{ name: 'Jakob Reiter', team: 'Vortex Velo', kmCycled: 0.873, totalTime: '02:58:04' }
 	]);
 	let individualLeaderboard = $derived(
-		[...riders].sort((a, b) => b.kmCycled - a.kmCycled || a.totalTime.localeCompare(b.totalTime))
+		[...riders]
+			.sort((a, b) => b.kmCycled - a.kmCycled || a.totalTime.localeCompare(b.totalTime))
+			.slice(0, 10)
 	);
 	let companyLeaderboard = $derived(
 		[
@@ -55,7 +78,9 @@
 					return companies;
 				}, new Map<string, Company>())
 				.values()
-		].sort((a, b) => b.averageKm - a.averageKm || a.name.localeCompare(b.name))
+		]
+			.sort((a, b) => b.averageKm - a.averageKm || a.name.localeCompare(b.name))
+			.slice(0, 10)
 	);
 
 	let bestCompanyAverageKm = $derived(companyLeaderboard[0]?.averageKm ?? 0);
@@ -85,7 +110,7 @@
 		</div>
 		<div class="stat">
 			<span>Total Riders</span>
-			<strong>{individualLeaderboard.length}</strong>
+			<strong>{riders.length}</strong>
 		</div>
 	</section>
 
