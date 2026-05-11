@@ -145,7 +145,7 @@
 	:global(body) {
 		margin: 0;
 		font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-		background: radial-gradient(circle at top, #101e3f, #040711 60%);
+		background: radial-gradient(circle at top, #253746, #14202b 60%);
 		color: #f6f7fb;
 	}
 
@@ -177,11 +177,18 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding-top: 1rem;
+		padding: 1rem 1rem 0;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.footer img {
+		max-width: min(100%, 56rem);
+		height: auto;
 	}
 
 	.logo-ishka {
-		height: clamp(2.5rem, 5vw, 4.5rem);
+		max-height: clamp(5.5rem, 14vw, 11rem);
 	}
 
 	.logo {
@@ -201,7 +208,7 @@
 	.subtitle {
 		margin: 0;
 		font-size: clamp(1rem, 1.8vw, 1.35rem);
-		color: #96b9ff;
+		color: #EADA24;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
@@ -238,7 +245,7 @@
 
 	.stat span {
 		font-size: clamp(0.8rem, 1.2vw, 1rem);
-		color: #adc1ff;
+		color: #EADA24;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 	}
@@ -250,15 +257,18 @@
 
 	.table-panel {
 		flex: 1;
-		background: rgba(5, 11, 30, 0.58);
-		border: 1px solid rgba(255, 255, 255, 0.16);
+		background: rgba(37, 55, 70, 0.7);
+		border: 1px solid rgba(234, 218, 36, 0.25);
 		border-radius: 1rem;
 		overflow: hidden;
 	}
 	.table-panel h2 {
 		margin: 0;
-		padding: 1rem 1rem 0;
-		font-size: clamp(1.1rem, 1.8vw, 1.55rem);
+		padding: 1.5rem 1.25rem 1.25rem;
+		font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+		color: #EADA24;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	table {
@@ -268,7 +278,8 @@
 	}
 
 	thead {
-		background: rgba(123, 166, 255, 0.2);
+		background: rgba(255, 255, 255, 0.08);
+		color: #f6f7fb;
 	}
 
 	th,
@@ -278,11 +289,13 @@
 	}
 
 	tbody tr:nth-child(even) {
-		background: rgba(255, 255, 255, 0.04);
+		background: rgba(234, 218, 36, 0.05);
 	}
 
 	tbody tr.winner {
-		background: linear-gradient(90deg, rgba(255, 214, 106, 0.3), rgba(255, 255, 255, 0.02));
+		background: linear-gradient(90deg, rgba(234, 218, 36, 0.35), rgba(234, 218, 36, 0.05));
+		color: #f6f7fb;
+		font-weight: 600;
 	}
 
 	.km {
