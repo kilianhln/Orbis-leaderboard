@@ -9,12 +9,10 @@
 </svelte:head>
 
 <script lang="ts">
-	type Rider = {
-		name: string;
-		team: string;
-		kmCycled: number;
-		totalTime: string;
-	};
+	import { invalidateAll } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import type { Rider } from '$lib/sheets';
+	import type { PageData } from './$types';
 
 	type Company = {
 		name: string;
@@ -24,86 +22,11 @@
 	};
 
 	const eventName = 'Cycle for Sight Challenge';
+	const refreshMs = 30_000;
 
-	let riders = $state<Rider[]>([
-		{ name: 'Lena Hoffmann', team: 'Summit Wheels', kmCycled: 0.524, totalTime: '02:31:42' },
-		{ name: 'Tom Richter', team: 'Velocity Core', kmCycled: 0.812, totalTime: '02:54:06' },
-		{ name: 'Mina Aydin', team: 'Road Falcons', kmCycled: 0.689, totalTime: '02:43:18' },
-		{ name: 'Noah Weiss', team: 'Urban Sprint', kmCycled: 0.145, totalTime: '02:20:54' },
-		{ name: 'Sara Klein', team: 'Alpine Cadence', kmCycled: 0.933, totalTime: '03:01:11' },
-		{ name: 'Jonas Bauer', team: 'Night Riders', kmCycled: 0.078, totalTime: '02:48:29' },
-		{ name: 'Hannah Brandt', team: 'Summit Wheels', kmCycled: 0.376, totalTime: '02:18:55' },
-		{ name: 'David Eberhard', team: 'Velocity Core', kmCycled: 0.712, totalTime: '02:39:12' },
-		{ name: 'Lukas Berger', team: 'Road Falcons', kmCycled: 0.458, totalTime: '02:26:48' },
-		{ name: 'Marie Schulz', team: 'Night Riders', kmCycled: 0.591, totalTime: '02:35:03' },
-		{ name: 'Elias Vogel', team: 'Aero Pulse', kmCycled: 0.844, totalTime: '02:52:11' },
-		{ name: 'Lara Krüger', team: 'Aero Pulse', kmCycled: 0.612, totalTime: '02:30:27' },
-		{ name: 'Felix Maier', team: 'Carbon Cranks', kmCycled: 0.273, totalTime: '02:09:33' },
-		{ name: 'Sophie Lang', team: 'Carbon Cranks', kmCycled: 0.498, totalTime: '02:24:17' },
-		{ name: 'Matti Werner', team: 'Storm Chasers', kmCycled: 0.967, totalTime: '03:05:48' },
-		{ name: 'Anna Becker', team: 'Ridge Runners', kmCycled: 0.205, totalTime: '02:14:52' },
-		{ name: 'Paul Neumann', team: 'Ridge Runners', kmCycled: 0.738, totalTime: '02:41:09' },
-		{ name: 'Clara Roth', team: 'Dawn Patrol', kmCycled: 0.351, totalTime: '02:17:44' },
-		{ name: 'Henry Fischer', team: 'Dawn Patrol', kmCycled: 0.624, totalTime: '02:33:55' },
-		{ name: 'Mila Wagner', team: 'Sunset Cyclers', kmCycled: 0.118, totalTime: '02:11:30' },
-		{ name: 'Leo Schwarz', team: 'Sunset Cyclers', kmCycled: 0.482, totalTime: '02:23:08' },
-		{ name: 'Ida Sommer', team: 'City Sparks', kmCycled: 0.789, totalTime: '02:47:36' },
-		{ name: 'Ben Köhler', team: 'Iron Pedalers', kmCycled: 0.566, totalTime: '02:29:14' },
-		{ name: 'Nora Engel', team: 'Iron Pedalers', kmCycled: 0.402, totalTime: '02:21:46' },
-		{ name: 'Theo Albers', team: 'Polar Spokes', kmCycled: 0.658, totalTime: '02:36:51' },
-		{ name: 'Pia Hartmann', team: 'Echo Trail', kmCycled: 0.314, totalTime: '02:15:22' },
-		{ name: 'Jakob Reiter', team: 'Vortex Velo', kmCycled: 0.873, totalTime: '02:58:04' },
-		{ name: 'Emma Voss', team: 'Summit Wheels', kmCycled: 0.456, totalTime: '02:24:12' },
-		{ name: 'Liam Frank', team: 'Velocity Core', kmCycled: 0.681, totalTime: '02:37:48' },
-		{ name: 'Mia Schröder', team: 'Road Falcons', kmCycled: 0.234, totalTime: '02:13:09' },
-		{ name: 'Niko Beck', team: 'Urban Sprint', kmCycled: 0.853, totalTime: '02:54:31' },
-		{ name: 'Lea Werner', team: 'Alpine Cadence', kmCycled: 0.572, totalTime: '02:29:55' },
-		{ name: 'Finn Walter', team: 'Night Riders', kmCycled: 0.398, totalTime: '02:20:14' },
-		{ name: 'Hanna Otto', team: 'Aero Pulse', kmCycled: 0.717, totalTime: '02:42:38' },
-		{ name: 'Erik Lehmann', team: 'Carbon Cranks', kmCycled: 0.609, totalTime: '02:33:22' },
-		{ name: 'Greta Beil', team: 'Storm Chasers', kmCycled: 0.482, totalTime: '02:25:48' },
-		{ name: 'Max Adler', team: 'Ridge Runners', kmCycled: 0.834, totalTime: '02:50:02' },
-		{ name: 'Lilly Burger', team: 'Dawn Patrol', kmCycled: 0.265, totalTime: '02:14:21' },
-		{ name: 'Oskar Junker', team: 'Sunset Cyclers', kmCycled: 0.792, totalTime: '02:46:09' },
-		{ name: 'Klara Pfeiffer', team: 'City Sparks', kmCycled: 0.358, totalTime: '02:19:11' },
-		{ name: 'Levi Bach', team: 'Iron Pedalers', kmCycled: 0.611, totalTime: '02:32:57' },
-		{ name: 'Frieda Holm', team: 'Polar Spokes', kmCycled: 0.474, totalTime: '02:23:48' },
-		{ name: 'Theo Schubert', team: 'Echo Trail', kmCycled: 0.823, totalTime: '02:49:36' },
-		{ name: 'Lina Dietz', team: 'Vortex Velo', kmCycled: 0.156, totalTime: '02:10:27' },
-		{ name: 'Mats Falke', team: 'Summit Wheels', kmCycled: 0.694, totalTime: '02:38:14' },
-		{ name: 'Pauline Stein', team: 'Velocity Core', kmCycled: 0.328, totalTime: '02:16:51' },
-		{ name: 'Ron Maus', team: 'Road Falcons', kmCycled: 0.564, totalTime: '02:28:36' },
-		{ name: 'Ella Funk', team: 'Urban Sprint', kmCycled: 0.901, totalTime: '02:57:13' },
-		{ name: 'Karl Böhm', team: 'Alpine Cadence', kmCycled: 0.276, totalTime: '02:14:42' },
-		{ name: 'Lou Reuter', team: 'Night Riders', kmCycled: 0.625, totalTime: '02:34:08' },
-		{ name: 'Mira Kaiser', team: 'Aero Pulse', kmCycled: 0.443, totalTime: '02:22:30' },
-		{ name: 'Linus Kraft', team: 'Carbon Cranks', kmCycled: 0.738, totalTime: '02:43:52' },
-		{ name: 'Romy Ott', team: 'Storm Chasers', kmCycled: 0.512, totalTime: '02:27:15' },
-		{ name: 'Felix Held', team: 'Ridge Runners', kmCycled: 0.187, totalTime: '02:12:04' },
-		{ name: 'Ida Wolf', team: 'Dawn Patrol', kmCycled: 0.659, totalTime: '02:35:42' },
-		{ name: 'Tim Decker', team: 'Sunset Cyclers', kmCycled: 0.224, totalTime: '02:13:26' },
-		{ name: 'Nele Sturm', team: 'City Sparks', kmCycled: 0.487, totalTime: '02:26:01' },
-		{ name: 'Aaron Volk', team: 'Iron Pedalers', kmCycled: 0.768, totalTime: '02:45:19' },
-		{ name: 'Hedi Bauer', team: 'Polar Spokes', kmCycled: 0.351, totalTime: '02:18:32' },
-		{ name: 'Linn Pohl', team: 'Echo Trail', kmCycled: 0.612, totalTime: '02:33:05' },
-		{ name: 'Ole Henke', team: 'Vortex Velo', kmCycled: 0.495, totalTime: '02:26:48' },
-		{ name: 'Mika Roth', team: 'Summit Wheels', kmCycled: 0.847, totalTime: '02:51:33' },
-		{ name: 'Selma Frey', team: 'Velocity Core', kmCycled: 0.213, totalTime: '02:12:47' },
-		{ name: 'Joris Bender', team: 'Road Falcons', kmCycled: 0.781, totalTime: '02:46:55' },
-		{ name: 'Jana Schmid', team: 'Urban Sprint', kmCycled: 0.376, totalTime: '02:19:38' },
-		{ name: 'Yuri Klotz', team: 'Alpine Cadence', kmCycled: 0.652, totalTime: '02:35:21' },
-		{ name: 'Lasse Probst', team: 'Night Riders', kmCycled: 0.498, totalTime: '02:26:14' },
-		{ name: 'Pia Linke', team: 'Aero Pulse', kmCycled: 0.197, totalTime: '02:12:23' },
-		{ name: 'Bennet Voigt', team: 'Carbon Cranks', kmCycled: 0.846, totalTime: '02:51:07' },
-		{ name: 'Saskia Beil', team: 'Storm Chasers', kmCycled: 0.541, totalTime: '02:28:42' },
-		{ name: 'Tobias Krebs', team: 'Ridge Runners', kmCycled: 0.328, totalTime: '02:17:09' },
-		{ name: 'Carla Werner', team: 'Dawn Patrol', kmCycled: 0.793, totalTime: '02:46:32' },
-		{ name: 'Aaron Niemann', team: 'Sunset Cyclers', kmCycled: 0.245, totalTime: '02:13:55' },
-		{ name: 'Linnea Berg', team: 'City Sparks', kmCycled: 0.583, totalTime: '02:30:18' },
-		{ name: 'Mattis Knapp', team: 'Iron Pedalers', kmCycled: 0.418, totalTime: '02:21:24' },
-		{ name: 'Stella Krause', team: 'Polar Spokes', kmCycled: 0.671, totalTime: '02:36:48' },
-		{ name: 'Jaron Tritt', team: 'Echo Trail', kmCycled: 0.532, totalTime: '02:27:51' }
-	]);
+	let { data }: { data: PageData } = $props();
+	let riders = $derived<Rider[]>(data.riders);
+	let dataError = $derived(data.dataError);
 	let individualLeaderboard = $derived(
 		[...riders]
 			.sort((a, b) => b.kmCycled - a.kmCycled || a.totalTime.localeCompare(b.totalTime))
@@ -134,6 +57,14 @@
 	);
 
 	let bestCompanyAverageKm = $derived(companyLeaderboard[0]?.averageKm ?? 0);
+
+	onMount(() => {
+		const interval = window.setInterval(() => {
+			void invalidateAll();
+		}, refreshMs);
+
+		return () => window.clearInterval(interval);
+	});
 </script>
 
 <main class="screen">
@@ -163,6 +94,12 @@
 			<strong>{riders.length}</strong>
 		</div>
 	</section>
+
+	{#if dataError}
+		<p class="data-status">{dataError}</p>
+	{:else if riders.length === 0}
+		<p class="data-status">No driver rows found in the configured Google Sheet.</p>
+	{/if}
 
 	<section class="content-grid">
 		<section class="table-panel" aria-labelledby="company-leaderboard-title">
@@ -381,12 +318,6 @@
 		letter-spacing: 0.08em;
 	}
 
-	.summary {
-		margin: 0;
-		font-size: clamp(1rem, 1.6vw, 1.3rem);
-		color: #d5dcf7;
-	}
-
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -421,6 +352,16 @@
 	.stat strong {
 		font-size: clamp(1.2rem, 2.5vw, 2rem);
 		font-weight: 700;
+	}
+
+	.data-status {
+		margin: 0;
+		padding: 0.85rem 1rem;
+		background: rgba(234, 218, 36, 0.13);
+		border: 1px solid rgba(234, 218, 36, 0.45);
+		border-radius: 0.75rem;
+		color: #f6f7fb;
+		font-size: clamp(0.9rem, 1.2vw, 1.05rem);
 	}
 
 	.table-panel {
