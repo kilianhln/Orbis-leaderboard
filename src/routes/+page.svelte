@@ -159,53 +159,11 @@
 	</footer>
 
 	<aside class="donate" aria-label="Donate now">
-		<svg
+		<img
 			class="donate-qr"
-			viewBox="0 0 21 21"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
-		>
-			<rect width="21" height="21" fill="#ffffff" />
-			<!-- top-left finder -->
-			<rect x="0" y="0" width="7" height="7" fill="#000" />
-			<rect x="1" y="1" width="5" height="5" fill="#fff" />
-			<rect x="2" y="2" width="3" height="3" fill="#000" />
-			<!-- top-right finder -->
-			<rect x="14" y="0" width="7" height="7" fill="#000" />
-			<rect x="15" y="1" width="5" height="5" fill="#fff" />
-			<rect x="16" y="2" width="3" height="3" fill="#000" />
-			<!-- bottom-left finder -->
-			<rect x="0" y="14" width="7" height="7" fill="#000" />
-			<rect x="1" y="15" width="5" height="5" fill="#fff" />
-			<rect x="2" y="16" width="3" height="3" fill="#000" />
-			<!-- timing + data placeholder cells -->
-			<g fill="#000">
-				<rect x="8" y="6" width="1" height="1" />
-				<rect x="10" y="6" width="1" height="1" />
-				<rect x="12" y="6" width="1" height="1" />
-				<rect x="6" y="8" width="1" height="1" />
-				<rect x="6" y="10" width="1" height="1" />
-				<rect x="6" y="12" width="1" height="1" />
-				<rect x="9" y="8" width="2" height="1" />
-				<rect x="13" y="8" width="1" height="2" />
-				<rect x="8" y="9" width="1" height="2" />
-				<rect x="11" y="10" width="2" height="2" />
-				<rect x="9" y="12" width="1" height="2" />
-				<rect x="13" y="12" width="1" height="1" />
-				<rect x="8" y="14" width="1" height="2" />
-				<rect x="11" y="14" width="2" height="1" />
-				<rect x="14" y="14" width="1" height="1" />
-				<rect x="16" y="15" width="1" height="2" />
-				<rect x="18" y="15" width="2" height="1" />
-				<rect x="14" y="17" width="2" height="2" />
-				<rect x="17" y="18" width="1" height="2" />
-				<rect x="9" y="16" width="1" height="2" />
-				<rect x="11" y="17" width="2" height="1" />
-				<rect x="13" y="19" width="1" height="2" />
-				<rect x="16" y="20" width="1" height="1" />
-				<rect x="19" y="19" width="1" height="1" />
-			</g>
-		</svg>
+			src="/qr-code.png"
+			alt="Donation QR code"
+		/>
 		<p class="donate-label">Donate now</p>
 	</aside>
 </main>
@@ -258,18 +216,18 @@
 		background: rgba(255, 255, 255, 0.09);
 		border: 1px solid rgba(255, 255, 255, 0.25);
 		border-radius: 0.9rem;
-		padding: 0.9rem 0.9rem 0.7rem;
+		padding: 1rem 1rem 0.8rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.55rem;
+		gap: 0.6rem;
 		backdrop-filter: blur(6px);
 		z-index: 10;
 	}
 
 	.donate-qr {
-		width: clamp(5rem, 8vw, 7.5rem);
-		height: clamp(5rem, 8vw, 7.5rem);
+		width: clamp(5.5rem, 8.8vw, 8.25rem);
+		height: clamp(5.5rem, 8.8vw, 8.25rem);
 		background: #ffffff;
 		border-radius: 0.5rem;
 		padding: 0.4rem;
@@ -279,7 +237,7 @@
 
 	.donate-label {
 		margin: 0;
-		font-size: clamp(0.8rem, 1.1vw, 1rem);
+		font-size: clamp(0.85rem, 1.15vw, 1.05rem);
 		font-weight: 700;
 		color: #95a4b1;
 		text-transform: uppercase;
