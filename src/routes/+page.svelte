@@ -21,7 +21,7 @@
 		averageKm: number;
 	};
 
-	const eventName = 'Cycle for Sight Challenge';
+	const eventName = 'Orbis Cycle for Sight Challenge';
 	const refreshMs = 30_000;
 
 	let { data }: { data: PageData } = $props();
