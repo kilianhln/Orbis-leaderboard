@@ -23,6 +23,8 @@
 
 	const eventName = 'Orbis Cycle for Sight Challenge';
 	const refreshMs = 30_000;
+	const riderKey = (rider: Rider, index: number) =>
+		`${rider.name}-${rider.team}-${rider.kmCycled}-${index}`;
 
 	let { data }: { data: PageData } = $props();
 	let riders = $derived<Rider[]>(data.riders);
@@ -137,7 +139,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each individualLeaderboard as rider, index (rider.name)}
+					{#each individualLeaderboard as rider, index (riderKey(rider, index))}
 						<tr class:winner={index === 0}>
 							<td>{index + 1}</td>
 							<td>{rider.name}</td>
