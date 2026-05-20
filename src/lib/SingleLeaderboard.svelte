@@ -127,10 +127,6 @@
 		/>
 	</footer>
 
-	<aside class="donate" aria-label="Donate now">
-		<img class="donate-qr" src="/qr-code.png" alt="Donation QR code" />
-		<p class="donate-label">Donate now</p>
-	</aside>
 </main>
 
 <style>
@@ -289,41 +285,6 @@
 
 	.logo-ishka {
 		max-height: clamp(5.5rem, 14vw, 11rem);
-	}
-
-	.donate {
-		position: fixed;
-		right: 1.5rem;
-		bottom: 1.5rem;
-		z-index: 10;
-		display: flex;
-		flex-direction: column;
-		gap: 0.6rem;
-		align-items: center;
-		padding: 1rem 1rem 0.8rem;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		border-radius: 0.9rem;
-		background: rgba(255, 255, 255, 0.09);
-		backdrop-filter: blur(6px);
-	}
-
-	.donate-qr {
-		display: block;
-		box-sizing: border-box;
-		width: clamp(5.5rem, 8.8vw, 8.25rem);
-		height: clamp(5.5rem, 8.8vw, 8.25rem);
-		padding: 0.4rem;
-		border-radius: 0.5rem;
-		background: #ffffff;
-	}
-
-	.donate-label {
-		margin: 0;
-		color: #95a4b1;
-		font-size: clamp(0.85rem, 1.15vw, 1.05rem);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
 	}
 
 	@media (max-width: 900px) {
